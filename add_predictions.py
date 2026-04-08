@@ -14,20 +14,25 @@ from astropy.time import Time
 import os
 import matplotlib.pyplot as plt
 import sqlite3
+import sqlite3
+from contextlib import closing
 
 day = 61129
 
 #Path to app local repository
-direc2 = "C:/Users/34626/Downloads/EOP Predictions/Pruebas/stream_app"
+direc2 = "C:/Users/becario.adsaz/Documents/Prueba/stream_app"
 
 ################### AUXILIARY  FUNCTIONS ################################
 def read_db(num,lista):
-    table = ['fcn_cpo']
-    conn = sqlite3.connect(f"{direc2}/eop_predictions.db")
-    cursor = conn.cursor()
-    cursor.execute(f""" {to_str(lista,num)}  """)
-    conn.commit()
-    conn.close()
+    with closing(sqlite3.connect(f"{direc2}/eop_predictions.db")) as conn:
+        with closing(conn.cursor()) as cursor:
+            cursor.execute(f""" {to_str(lista,num)}  """)
+        conn.commit()   
+    #conn = sqlite3.connect(f"{direc2}/eop_predictions.db", timeout = 5)
+    #cursor = conn.cursor()
+    #cursor.execute(f""" {to_str(lista,num)}  """)
+    #conn.commit()
+    #conn.close()
     return 0
 
 """
@@ -52,8 +57,8 @@ def greg_to_mjd(f):
     return mjd
 
 def to_str(lst,num):
-    aa = ['fcn_cpo']
-    st = f'INSERT INTO {aa[num]} (date, epoch, ac, as, x0, y0, dx, dy) VALUES '
+    aa = ['eop_old','eop_new','fcn_cpo']
+    st = f'INSERT INTO {aa[num]} (date, epoch, ac, [as], x0, y0, dx, dy) VALUES '
     for x in lst:
         st = st+str(tuple(x))+','
     #print(st[:-1]+';')
@@ -77,7 +82,7 @@ f= open(dirs1[0],'r')
 data = f.readlines()
 f.close()
 
-data = list(np.transpose([j.split() for j in data[13063:]]))
+data = list(np.transpose([j.split() for j in data[13065:13070]]))
 
 data[0] = [int(float(x)) for x in data[0]]
 for j in range(1,7):
@@ -86,16 +91,16 @@ for j in range(1,7):
 rows = []
 a= data[0]
 mjd = [Time(j,format = 'mjd') for j in a]
-date = [j.iso for j in mjd]
+date = [j.iso[:-4] for j in mjd]
 rows.append(date)
 for j in range(0,7):
     rows.append(data[j])
 
 rows1 = [[fila[i] for fila in rows] for i in range(len(rows[0]))]
  
-print(rows1)
+print(rows1[0:10])
 
-df_old= read_db(0,rows1)
+df_old= read_db(2,rows1)
 
 """
 for i in range(2):
