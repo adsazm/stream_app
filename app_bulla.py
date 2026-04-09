@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 import time
 import datetime 
 from astropy.time import Time
@@ -58,12 +59,10 @@ if menu == "EOP PREDICTIONS":
             #Connection to db database where all predictions are stored
             dff = read_db(0)
             dff_aux= read_db(1)
-            dff_aux_aux = read_db(2)
             
             #For easy access to the desired file, we will filter it by year, then month and finally day.
             dff = separate_dates(dff)
             dff_aux = separate_dates(dff_aux)
-            dff_aux_aux = separate_dates2(dff_aux_aux)
             
             #Construction of historic data
             df_no_hist, df_si_hist = history(dff,dff_aux)
@@ -136,21 +135,19 @@ if menu == "EOP PREDICTIONS":
                  ll.sort(reverse=False)
                  years = st.selectbox(label = '1.- Select a year:', options = ll, index = ll.index(max(ll)))
                  df3 = df2[df2['year']==years]
-                 dff_aux_aux2 = dff_aux_aux[df_aux_aux['year']==years]
             with col2:
                  ll = list(set(df3.month.values))
                  ll.sort(reverse=False)
                  months = st.selectbox(label = '2.- Select a month:', options = ll, index = ll.index(max(ll)))
                  df4 = df3[df3['month']==months]
-                 dff_aux_aux3 = dff_aux_aux2[df_aux_aux2['year']==years]
             with col3:
                  ll = list(set(df4.day.values))
                  ll.sort(reverse=False)
                  days = st.selectbox(label = '3.- Select a day:', options = ll, index = ll.index(max(ll)))
                  df5 = df4[df4['day']==days]
-                 dff_aux_aux4 = dff_aux_aux3[df_aux_aux3['year']==years]
+            
 
-            df, txt, fm = create_df(val,df5,df_mjd,dff_aux_aux4)
+            df, txt, fm = create_df(val,df5,df_mjd)
             t = False
             if val in {'dx','dy'}:
                 df, t = df_filtered(dff_aux,df,val, years, months, days)
