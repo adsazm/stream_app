@@ -6,21 +6,20 @@ Created on Fri Jan 30 09:31:18 2026
 """
 
 import numpy as np
-import pandas as pd
 import math
-import time
-import datetime 
 from astropy.time import Time
 import os
-import matplotlib.pyplot as plt
-import sqlite3
 import sqlite3
 from contextlib import closing
 
-day = 61129
-
 #Path to app local repository
 direc2 = "C:/Users/becario.adsaz/Documents/Prueba/stream_app"
+
+day = 61139
+
+# URL Santiago
+url = 'https://unialicante-my.sharepoint.com/:u:/g/personal/santiago_belda_mscloud_ua_es/IQDmLGAPUE3CSbJmOpiesTZ6AZ9r3QPzk0kZfidSxidSllY?e=rRhHk6&download=1/FCN.zip/'
+
 
 ################### AUXILIARY  FUNCTIONS ################################
 def read_db(num,lista):
@@ -63,26 +62,43 @@ def to_str(lst,num):
         st = st+str(tuple(x))+','
     #print(st[:-1]+';')
     return st[:-1]+';'
+
+def delete_range(conn, id_inicio, id_fin, num):
+    aa = ['eop_old','eop_new','fcn_cpo']
+    query = f"DELETE FROM {aa[num]} WHERE epoch BETWEEN ? AND ?"
+    with closing(conn.cursor()) as cursor:
+        cursor.execute(query, (id_inicio, id_fin))
+    conn.commit()
+
+def get_last_epoch(conn, num, param):
+    aa = ['eop_old','eop_new','fcn_cpo']
+    query = f"SELECT MAX({param}) FROM {aa[num]}"
+    with closing(conn.cursor()) as cursor:
+        cursor.execute(query)
+        result = cursor.fetchone()
+    return result[0]
             
-###################### EOP_OLD & NEW ###########################
+###################### FCN ###########################
 
-d = Time(day,format = 'mjd')
-d.format = 'iso'
-d = d.value[:-4]
+with closing(sqlite3.connect(f"{direc2}/eop_predictions.db")) as conn:
+    last_day=get_last_epoch(conn, 2, 'epoch')
+    delete_range(conn, last_day-564, last_day, 2)
+
+direc = direc2+'/fcn_cpo/FCN_CPO_IERS_C0420_20260329.txt'
+
+fday = (Time(day, format = 'mjd').to_datetime()).strftime('%Y%m%d')
+print(fday)
+dir1 = url+f'FCN_CPO_IERS_C0420_{fday}.txt'
+print(dir1)
 
 
-direc = os.getcwd()+'/fcn_cpo/'
-dirs1 = [f'{direc}FCN_CPO_IERS_C0420_20260329.txt',
-        f'{direc}si_eam/eoppcc_168_{day}.txt']
-dirs2 = [f'{direc}no_eam_new/eoppcc_185_{day}.txt',
-        f'{direc}si_eam_new/eoppcc_186_{day}.txt']
-
-
-f= open(dirs1[0],'r')
+f= open(direc,'r')
 data = f.readlines()
 f.close()
 
-data = list(np.transpose([j.split() for j in data[13065:13070]]))
+new_day=int(float(data[-1].split()[0]))
+
+data = list(np.transpose([j.split() for j in data[(last_day-565-new_day):]]))
 
 data[0] = [int(float(x)) for x in data[0]]
 for j in range(1,7):
@@ -97,8 +113,6 @@ for j in range(0,7):
     rows.append(data[j])
 
 rows1 = [[fila[i] for fila in rows] for i in range(len(rows[0]))]
- 
-print(rows1[0:10])
 
 df_old= read_db(2,rows1)
 
