@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import altair as alt
 import plotly.graph_objects as go
 import sqlite3
-#from streamlit_option_menu import option_menu
-#from streamlit_scroll_to_top import scroll_to_here
+from streamlit_option_menu import option_menu
+from streamlit_scroll_to_top import scroll_to_here
 from functions_app import *
 from texts_app import *
 st.set_page_config(layout = 'wide', page_title='EOP data', page_icon = ':earth_africa:')
