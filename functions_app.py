@@ -40,6 +40,18 @@ def separate_dates(df):
     df.insert(2, column = 'day', value = day)
     return df
 
+def separate_dates_2(df):
+    #separates the gregorian date in three strings for yearn, month and day
+    dates = df['date'].values
+    year = [s[:4] for s in dates]
+    month = [m[5:7] for m in dates]
+    day = [d[8:10] for d in dates]
+    
+    df.insert(0, column = 'year', value = year)
+    df.insert(1, column = 'month', value = month)
+    df.insert(2, column = 'day', value = day)
+    return df
+
 
 @st.cache_data(ttl = 3600, show_spinner=False)
 def create_df(val,df5,df_mjd):
@@ -47,6 +59,7 @@ def create_df(val,df5,df_mjd):
     #Reading the data of the chosen prediction epoch
     conv1 = (df5[df5['type_eam'] == 0])[df5.columns[-11:]].values[0]
     conv2 = (df5[df5['type_eam'] == 1])[df5.columns[-11:]].values[0]
+    conv3 = conv2
     conv_dates = ((df5[df5['type_eam'] == 0])["pub_date"].values)[0]
     epochs = (df_mjd[df_mjd["pub_date"] == conv_dates])[df5.columns[-11:]].iloc[0].values
     epochs =[int(x) for x in epochs]
@@ -61,7 +74,7 @@ def create_df(val,df5,df_mjd):
          txt = 'as'
          fm = '% .8f'
          
-    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2}, index = (['Day'+str(v) for v in range(11)]))     
+    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2, f'FCN_CPO [{txt}]':conv3}, index = (['Day'+str(v) for v in range(11)]))     
     return df_final, txt, fm
 
 

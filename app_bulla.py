@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import altair as alt
 import plotly.graph_objects as go
 import sqlite3
-from streamlit_option_menu import option_menu
-from streamlit_scroll_to_top import scroll_to_here
+#from streamlit_option_menu import option_menu
+#from streamlit_scroll_to_top import scroll_to_here
 from functions_app import *
 from texts_app import *
 st.set_page_config(layout = 'wide', page_title='EOP data', page_icon = ':earth_africa:')
@@ -58,11 +58,13 @@ if menu == "EOP PREDICTIONS":
         try:
             #Connection to db database where all predictions are stored
             dff = read_db(0)
-            dff_aux= read_db(1)
+            dff_aux = read_db(1)
+            dff_aux_aux = read_db(2)
             
             #For easy access to the desired file, we will filter it by year, then month and finally day.
             dff = separate_dates(dff)
             dff_aux = separate_dates(dff_aux)
+            dff_aux_aux = separate_dates_2(dff_aux_aux)
             
             #Construction of historic data
             df_no_hist, df_si_hist = history(dff,dff_aux)
