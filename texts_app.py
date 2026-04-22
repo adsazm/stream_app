@@ -230,7 +230,7 @@ The Earth's rotation and its spatial
 orientation are subject to irregular variations arising 
 from a wide range of geophysical and astronomical phenomena.
 
-<b>The Earth Orientation Parameters (EOP)<\b> are a set of five parameters that
+<b>The Earth Orientation Parameters (EOP)</b> are a set of five parameters that
  describe the planet’s orientation and rotational behaviour:
 <ul>
     <li><b>The pole coordinates (xpol, ypol)</b> of the Celestial Intermediate Pole (CIP) with

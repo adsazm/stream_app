@@ -304,7 +304,10 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
     
     date_fin = [(Time(x, format = 'mjd').to_datetime()).strftime('%Y-%m-%d %H:%M:%S') for x in epoch_fin]
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 7495fbd3eab68d58d898ec986dfc92afe5101580
     bl = True
 >>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
     if f> len(df_fcn):
@@ -312,6 +315,7 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
         
     else: 
         xval = f
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     try:
@@ -321,6 +325,8 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
     
     
 =======
+=======
+>>>>>>> 7495fbd3eab68d58d898ec986dfc92afe5101580
 
     #index interval
     if df_fcn.epoch.loc[f]<epoch_fin[0] or df_fcn.epoch.loc[i]>epoch_fin[-1]:
@@ -340,14 +346,17 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
             
 >>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dx_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1.1,dash = 'dot'),name = 'dX IERS 20u24 C04'))
+    fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dx_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1,dash = 'dot'),name = 'dX IERS 20u24 C04'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dy_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1,dash = 'dot'),name = 'dY IERS 20u24 C04'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[6]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dX'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[7]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dY'))
 <<<<<<< HEAD
+<<<<<<< HEAD
     fig.add_trace(go.Scatter(x = date_fin[ult:ult+len(dx_fin)], y = dx_fin[ult:], mode = 'lines+markers',marker = dict(size = 3.5), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dX IERS finals.daily'))
     fig.add_trace(go.Scatter(x = date_fin[ult:ult+len(dy_fin)], y = dy_fin[ult:], mode = 'lines+markers',marker = dict(size = 3.5), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dY IERS finals.daily'))
 =======
+=======
+>>>>>>> 7495fbd3eab68d58d898ec986dfc92afe5101580
     if bl:
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dx_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dX IERS finals.daily'))
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dy_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dY IERS finals.daily'))
