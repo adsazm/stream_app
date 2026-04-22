@@ -115,7 +115,9 @@ We are a team of scientists working in collaboration from:
 </ul>
 
 <i>If you have any questions or suggestions, please write (ES/EN) to
-<a href = "mailto:lucia.delnido@ua.es">lucia.delnido@ua.es</a></i>
+<a href = "mailto:
+becario.adsaz@externomf.es">
+becario.adsaz@externomf.es</a></i>
 </div>
 """
 
