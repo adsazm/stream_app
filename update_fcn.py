@@ -28,6 +28,13 @@ def read_db(num,lista):
         conn.commit()   
     return 0
 
+<<<<<<< HEAD
+=======
+"""
+SI ERROR AL EJECUTAR CON RESTART EL KERNEL SUELE FUNCIONAR
+"""
+
+>>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
 def to_str(lst,num):
     aa = ['eop_old','eop_new','fcn_cpo']
     st = f'INSERT INTO {aa[num]} (date, epoch, ac, [as], x0, y0, dx, dy) VALUES '
