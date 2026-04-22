@@ -73,7 +73,7 @@ def create_df(val,df5,df_mjd):
          txt = 'as'
          fm = '% .8f'
          
-    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2, index = (['Day'+str(v) for v in range(11)]))     
+    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2}, index = (['Day'+str(v) for v in range(11)]))     
     return df_final, txt, fm
 
 
