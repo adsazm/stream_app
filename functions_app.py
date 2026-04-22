@@ -59,6 +59,7 @@ def create_df(val,df5,df_mjd):
     #Reading the data of the chosen prediction epoch
     conv1 = (df5[df5['type_eam'] == 0])[df5.columns[-11:]].values[0]
     conv2 = (df5[df5['type_eam'] == 1])[df5.columns[-11:]].values[0]
+    conv3 = conv2
     conv_dates = ((df5[df5['type_eam'] == 0])["pub_date"].values)[0]
     epochs = (df_mjd[df_mjd["pub_date"] == conv_dates])[df5.columns[-11:]].iloc[0].values
     epochs =[int(x) for x in epochs]
@@ -73,7 +74,7 @@ def create_df(val,df5,df_mjd):
          txt = 'as'
          fm = '% .8f'
          
-    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2}, index = (['Day'+str(v) for v in range(11)]))     
+    df_final = pd.DataFrame({'Date [YY-MM-DD]':dates_fmt,'Epoch [MJD]':epochs, f'w/o EAM [{txt}]':conv1, f'w/ EAM [{txt}]':conv2, f'FCN_CPO [{txt}]':conv3}, index = (['Day'+str(v) for v in range(11)]))     
     return df_final, txt, fm
 
 
@@ -302,13 +303,16 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
     f = (df_fcn[df_fcn.date == b].index)[0]
     
     date_fin = [(Time(x, format = 'mjd').to_datetime()).strftime('%Y-%m-%d %H:%M:%S') for x in epoch_fin]
-
+<<<<<<< HEAD
+=======
     bl = True
+>>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
     if f> len(df_fcn):
         xval = len(df_fcn)
         
     else: 
         xval = f
+<<<<<<< HEAD
     
     try:
         ult = epoch_fin.index(df_fcn.epoch.loc[f]+1)
@@ -316,6 +320,7 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
         ult = 0
     
     
+=======
 
     #index interval
     if df_fcn.epoch.loc[f]<epoch_fin[0] or df_fcn.epoch.loc[i]>epoch_fin[-1]:
@@ -333,17 +338,20 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
         else:
             ifin = epoch_fin.index(df_fcn.epoch.loc[i])
             
+>>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dx_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1.1,dash = 'dot'),name = 'dX IERS 20u24 C04'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dy_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1,dash = 'dot'),name = 'dY IERS 20u24 C04'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[6]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dX'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[7]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dY'))
+<<<<<<< HEAD
     fig.add_trace(go.Scatter(x = date_fin[ult:ult+len(dx_fin)], y = dx_fin[ult:], mode = 'lines+markers',marker = dict(size = 3.5), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dX IERS finals.daily'))
     fig.add_trace(go.Scatter(x = date_fin[ult:ult+len(dy_fin)], y = dy_fin[ult:], mode = 'lines+markers',marker = dict(size = 3.5), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dY IERS finals.daily'))
-
+=======
     if bl:
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dx_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dX IERS finals.daily'))
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dy_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dY IERS finals.daily'))
+>>>>>>> b2a56731cb2fc783dc9a15e777fdc22be9caec93
     fig.update_layout(title = 'FCN-CPOs solutions',
                       title_font_color = '#fb9a5a',
                       title_font_size = 28,
