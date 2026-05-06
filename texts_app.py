@@ -216,7 +216,7 @@ The methodology and details about this model can be found in the following
 paper: <a href="https://www.sciencedirect.com/science/article/pii/S0264370715300120">Belda, S., Ferrándiz J.M., Heinkelmann R., Nilsson T. and Schuh H. (2016).
         <i>Testing a new Free Core Nutation empirical model (2016)</i></a>
 
-This data gets updated bi-monthly
+This data gets updated weekly
 """
 
 
