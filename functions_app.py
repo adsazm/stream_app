@@ -328,11 +328,20 @@ def fig_fcn(intervalo, df_fcn, dx_c04, dy_c04, dx_fin, dy_fin, epoch_fin):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dx_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1,dash = 'dot'),name = 'dX IERS 20u24 C04'))
     fig.add_trace(go.Scatter(x = df_fcn.date[i:xval], y = dy_c04[i:xval], mode = 'lines+markers',marker = dict(size = 2.5), line = dict(width = 1,dash = 'dot'),name = 'dY IERS 20u24 C04'))
-    fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[6]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dX'))
-    fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[7]][i:f], mode = 'lines+markers',marker = dict(size = 3), line = dict(width = 1.2),name = 'FCN - dY'))
     if bl:
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dx_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dX IERS finals.daily'))
         fig.add_trace(go.Scatter(x = date_fin[ifin:ffin], y = dy_fin[ifin:ffin], mode = 'lines+markers',marker = dict(size = 3.75), marker_symbol='star', line = dict(width = 1,dash = 'dot'),name = 'dY IERS finals.daily'))
+    x_line = df_fcn.date.iloc[-565]
+    x_index = (df_fcn[df_fcn.date == x_line].index)[0]
+    if b >= x_line:
+        fig.add_trace(go.Scatter(x = [x_line, x_line], y = [-800, 800], mode = 'lines+markers',marker = dict(size = 1), marker_symbol='star', line = dict(color='springgreen', width = 1,dash = 'dot'), name = 'Prediction Line'))
+        fig.add_trace(go.Scatter(x = df_fcn.date[i:x_index], y = df_fcn[df_fcn.columns[6]][i:x_index], mode = 'lines+markers',marker = dict(color='darkred', size = 3), line = dict(color='red', width = 1.2),name = 'FCN - dX'))
+        fig.add_trace(go.Scatter(x = df_fcn.date[i:x_index], y = df_fcn[df_fcn.columns[7]][i:x_index], mode = 'lines+markers',marker = dict(color='crimson', size = 3), line = dict(color='red', width = 1.2),name = 'FCN - dY'))
+        fig.add_trace(go.Scatter(x = df_fcn.date[x_index:f], y = df_fcn[df_fcn.columns[6]][x_index:f], mode = 'lines+markers',marker = dict(color='seagreen', size = 3), line = dict(color='springgreen', width = 1.2),name = 'FCN - dX Predicted'))
+        fig.add_trace(go.Scatter(x = df_fcn.date[x_index:f], y = df_fcn[df_fcn.columns[7]][x_index:f], mode = 'lines+markers',marker = dict(color='mediumseagreen', size = 3), line = dict(color='springgreen', width = 1.2),name = 'FCN - dY Predicted'))
+    else:
+        fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[6]][i:f], mode = 'lines+markers',marker = dict(color='red', size = 3), line = dict(color='red', width = 1.2),name = 'FCN - dX'))
+        fig.add_trace(go.Scatter(x = df_fcn.date[i:f], y = df_fcn[df_fcn.columns[7]][i:f], mode = 'lines+markers',marker = dict(color='red', size = 3), line = dict(color='red', width = 1.2),name = 'FCN - dY'))
     fig.update_layout(title = 'FCN-CPOs solutions',
                       title_font_color = '#fb9a5a',
                       title_font_size = 28,
